@@ -1,3 +1,5 @@
+
+### 说明
 基于新型冠状病毒感染的肺炎诊疗方案1-7版 关键词分析
 ![words_relation](./words_relation.png)
 
@@ -10,6 +12,9 @@
 
 ![word_dict](./words_dict.png)
 
+### using
+seg2word.py 将格式化的文档正文分词
+draw.py 将图画出
 
 
 
