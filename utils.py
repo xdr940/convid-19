@@ -66,6 +66,70 @@ def toarry(file_in,file_out):
     writelines(file_out,array)
 
     return array
+#便参数函数
+def merge_list2(one_list, *more_list):
+    for i in range(len(more_list)):
+        for item in more_list[i]:
+            if item not in one_list:
+                one_list.append(item)
+    return one_list
+def merge_list(listoflist):
+    if listoflist==[]:
+        ret = []
+    else:
+        ret = listoflist[0]
+
+    for ls in listoflist[0:]:
+        for item in ls:
+            if item not in ret:
+                ret.append(item)
+    return  ret
+def normalize(ls):
+    min_=min(ls)
+    max_ = max(ls)
+    i=0
+    ret = []
+    for item in ls:
+        ret .append( float(item - min_)/(max_ -min_))
+    return ret
+
+def recolor(ls):
+    ret = []
+    colors = ['lightskyblue','skyblue','deepskyblue','cornflowerblue','royalblue']
+    step = len(colors)
+    ls = normalize(ls)
+    print(ls)
+    for item in ls:
+        n = 0.
+        while n <step:
+            if item >= n/step and item <=(n+1)/step:
+                ret.append(colors[int(n)])
+            n+=1
+
+    return ret
+
+def str2list(str):
+    '''
+        str = "['.0.1','.0.2']" -- >list=['.0.1','.0.2']
+    :param str:
+    :return:
+    '''
+    str = str.replace('[','')
+    str = str.replace(']','')
+    str = str.replace('\'','')
+    str = str.replace(' ','')
+    str = str.replace('\"','')
+
+
+    ret = str.split(',')
+    return  ret
+def parents_format(strs):
+    lists=[]
+    for str in strs:
+        ls = str2list(str)
+        lists.append(ls.copy())
+    return lists
+
 
 
 #SeqSubSeq
