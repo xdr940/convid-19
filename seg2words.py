@@ -6,11 +6,12 @@ import argparse
 from  utils import  readlines,stopwordslist,writelines
 parser = argparse.ArgumentParser(description="precess tree file to a doc")
 
-parser.add_argument('--doc',default='./data/txt6.txt')
-parser.add_argument('--seged_doc',default='./data/seged_doc_6.txt')
+parser.add_argument('--doc',default='./data/txt4.txt')
+parser.add_argument('--seged_doc',default='./data/seged_doc_4.txt')
+parser.add_argument('--graph_tab_csv',default='./data/graph_tab_4.csv')
 parser.add_argument('--stop_words_file',default='./data/stopwords.txt')
-parser.add_argument('--graph_tab',default='./data/graph_tab.txt')
-parser.add_argument('--graph_tab_csv',default='./data/graph_tab_6.csv')
+
+
 
 args = parser.parse_args()
 Level = {
