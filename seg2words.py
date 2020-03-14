@@ -6,9 +6,9 @@ import argparse
 from  utils import  readlines,stopwordslist,writelines
 parser = argparse.ArgumentParser(description="precess tree file to a doc")
 
-parser.add_argument('--doc',default='./data/txt4.txt')
-parser.add_argument('--seged_doc',default='./data/seged_doc_4.txt')
-parser.add_argument('--graph_tab_csv',default='./data/graph_tab_4.csv')
+parser.add_argument('--doc',default='./data/txt7.txt')
+parser.add_argument('--seged_doc',default='./data/seged_doc_s.txt')
+parser.add_argument('--graph_tab_csv',default='./data/graph_tab_s.csv')
 parser.add_argument('--stop_words_file',default='./data/stopwords.txt')
 
 
@@ -290,5 +290,5 @@ def get_word(str):
     return str[3:]
 
 if __name__ == '__main__':
-    seg2words(args)#格式化好的文本, 变成词序列
+    #seg2words(args)#格式化好的文本, 变成词序列
     infer_graph_csv_table(args)#词序列变成表格, generate graph_tab.txt

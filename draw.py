@@ -12,13 +12,13 @@ import pandas_profiling
 from networkx.drawing.nx_pydot import graphviz_layout
 from utils import  readlines,value,read_as_list,parents_format,merge_list,merge_list2,normalize,recolor
 parser = argparse.ArgumentParser(description="precess tree file to a doc")
-parser.add_argument('--graph_tab_csv',default='./data/graph_tab_2.csv')
-parser.add_argument('--graph_tab_sta',default='./data/graph_tab_sta_4.csv')
+parser.add_argument('--graph_tab_csv',default='./data/graph_tab_s.csv')
+parser.add_argument('--graph_tab_sta',default='./data/graph_tab_sta_7.csv')
+args = parser.parse_args()
 
 draw_th=1
 
 G = nx.MultiDiGraph()
-args = parser.parse_args()
 
 vec_class=['.1','.2','.3','.4','.5','.0']
 level_color = {
@@ -47,7 +47,8 @@ def Draw_2(G, df):
     # key_nodes=['.1.00','.1.01','.1.03','.1.07','.1.08']
     # key_nodes=['.1.00','.1.01','.1.02','.1.03','.1.04','.1.05','.1.06','.1.07','.1.09','.1.10','.1.11']
 
-    key_nodes = ['.1.00']
+    #key_nodes = ['.1.09']
+    key_nodes=[]
     if len(key_nodes) != 0:
         nodes = []
         for item in key_nodes:
