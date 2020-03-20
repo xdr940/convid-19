@@ -12,11 +12,22 @@ import pandas_profiling
 from networkx.drawing.nx_pydot import graphviz_layout
 from utils import  readlines,value,read_as_list,parents_format,merge_list,merge_list2,normalize,recolor
 parser = argparse.ArgumentParser(description="precess tree file to a doc")
-parser.add_argument('--graph_tab_csv',default='./data/graph_tab_s.csv')
+parser.add_argument('--graph_tab_csv',default='./data/graph_tab_3.csv')
+parser.add_argument('--key_nodes',
+                    #default=['.1.00','.1.02','.1.03','.1.07']
+                    default=['.1.06']#,'.1.10']
+                    )
 parser.add_argument('--graph_tab_sta',default='./data/graph_tab_sta_7.csv')
+parser.add_argument('--show_leaf',default=True)
 args = parser.parse_args()
 
-draw_th=1
+
+#中文显示
+plt.rcParams['font.family'] = ['sans-serif']
+plt.rcParams['font.sans-serif'] = ['SimHei']
+
+
+draw_th=3
 
 G = nx.MultiDiGraph()
 
@@ -42,13 +53,8 @@ def Draw_2(G, df):
     :param df:
     :return:
     '''
-    # doc6         病原学特点, 流行病学特点,诊断标准
-    # key_nodes = ['.1.00','.1.01',  '.1.03', '.1.07']
-    # key_nodes=['.1.00','.1.01','.1.03','.1.07','.1.08']
-    # key_nodes=['.1.00','.1.01','.1.02','.1.03','.1.04','.1.05','.1.06','.1.07','.1.09','.1.10','.1.11']
 
-    #key_nodes = ['.1.09']
-    key_nodes=[]
+    key_nodes = args.key_nodes#画出的跟结点
     if len(key_nodes) != 0:
         nodes = []
         for item in key_nodes:
@@ -72,10 +78,14 @@ def Draw_2(G, df):
 
     # REMOVE NODES
     Gnodes = list(G.nodes)  # deep copy
-    for node in Gnodes:
-        if node[:2] == '.0' and in_deg[node] < draw_th:
-            G.remove_node(node)
-    print('AFTER REMOVE')
+    if args.show_leaf==False:
+        for node in Gnodes:
+            if node[:2] == '.0' and in_deg[node] < draw_th:
+                G.remove_node(node)
+        print('AFTER REMOVE')
+    else:
+        print('SHOW LEAF')
+
     print(len(G.nodes))
     print(len(G.edges))
 
@@ -85,10 +95,16 @@ def Draw_2(G, df):
         if is_leaf(i) == False:  # 如果边的入结点不是叶子, 那边就是干
             key_edges.append((o, i, j))
 
-    # with labels
+    # with labels, 显示中文结点名字
+    words={}
+    for idx,row in df.iterrows():
+        pass
+        words[row['id']]=row['word']
     labels = {}
-    for node in G.nodes:
-        labels[node] = node  # df['id'].at(node)
+    for id in G.nodes:
+#        labels[id] = id  # named as id
+        labels[id] = words[id]  # df['id'].at(node)
+
     # 1. node color size
     node_color = []
     node_size = []
@@ -140,7 +156,8 @@ def Draw_2(G, df):
             # edge_cmap=plt.get_cmap('Blues'),
             width=edge_width,
             # label_color='white',
-            # labels = labels,
+            labels = labels,
+            encoding='utf-8',
             with_labels=True)
     plt.axis('off')
     plt.show()
@@ -182,7 +199,7 @@ def put_all_G(df):
     '''
 
     for idx,row in df.iterrows():
-        G.add_node(row['id'],message= row['word'])
+        G.add_node(row['id'],message= row['word'],encoding='utf-8')
     print('put g nodes '+str(len(G.nodes())))
     for idx,row in df.iterrows():
         for parent in row['parents'] :
